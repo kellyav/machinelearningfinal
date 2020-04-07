@@ -2,7 +2,7 @@ Beginers Guide to posting code on Github:
 
 You can do this one of two ways. Manually on the website or through a push request using Terminal (Command line code). 
 For our purposes we can use the manual way.
-See: for the Command line How-to. 
+See: https://github.com/kellyav/isat_2020/blob/master/pull_request.md for my Commandline How-to guide. 
 
 1. On GitHub, navigate to the main page of the repository.
 
@@ -15,5 +15,6 @@ See: for the Command line How-to.
 The commit will post with your name on it, saying that you made changes and when the last changes were made. 
 ! Important! For us, since we are working with three people and the project will consist of a lot of moving parts, 
 choose the "Create new branch" option when posting the code. That way we can create a version history and it doesnt replace older version of the code, just in case something goes wrong like an error, and we can go back and look at previous versions.
+Name the branch by version number and keep the naming consistent. 
 
-5. Click Commit changes.
+5. Click Commit change/ propose file change.
