@@ -32,7 +32,7 @@ it will completely overwrite the old versions of the code.*
 
 
 4. To update the master branch, we need to 'pull' the updates from the development branch into the master branch 
-- this is done by doing a **Pull Request**.
+- this is done by doing a **Pull Request **.
 
 5. So to open a Pull Request for the changes done to the markdown file, click the tab (located next to 'issues' and 'actions').
 Select the green New pull request button.
