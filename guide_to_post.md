@@ -2,6 +2,7 @@
 
 You can do this one of two ways. Manually on the website or through a push request using Terminal (Command line) code. 
   It is more challneging to do it the manual way, but this guide is an attempt to explain how to go about it.
+
 *See: https://github.com/kellyav/isat_2020/blob/master/git_upload_guide.md for my Commandline How-to guide.*
 
 
