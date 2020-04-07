@@ -6,7 +6,7 @@ You can do this one of two ways. Manually on the website or through a push reque
 *See: https://github.com/kellyav/isat_2020/blob/master/git_upload_guide.md for my Commandline How-to guide.*
 
 
-On GitHub, navigate to the main page of the repository.
+Start by navigating to the main page of the repository on GitHub.
 
 ## To update changes to our R markdown file: 
 *note that you can edit the code directly on Githubs website 
