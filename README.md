@@ -13,7 +13,9 @@ We will use Rmarkdown to determine the type of tumor a breast cancer patient has
 Data exploration and a Chi-square test will be used to determine which variables are predictors for the type of tumor the breast cancer patient has. K-NN and Naive Bayes will be run using all the predictor variables in the dataset. These same algorithms will also run with only the variables that are significant predictors of the type of cancer. The results will be compared to determine if there is a difference between the error rate of using all the variables and the error rate of using only the significant predictors. The error rates will also be examined to determine whether K-NN or Naive Bayes works best at predicting the type of tumor the breast cancer patient has.
 
 ## Contributors: 
-@kellyav
-@ryandoesmath
-( @ lyndon )
+@kellyav Alexa Kelly
+
+@ryandoesmath Ryan Folks 
+
+( @ lyndon ) Lyndon Swarey 
 
