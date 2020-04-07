@@ -1,0 +1,16 @@
+---
+title: "lab_08_RyanFolks"
+author: "Lyndon Swarey, Alexa Kelly, Ryan Folks"
+date: "4/2/2020"
+output: 
+  html_document:
+    toc: true
+    toc_float: true 
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Template header.
