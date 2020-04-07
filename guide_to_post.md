@@ -7,7 +7,7 @@ You can do this one of two ways. Manually on the website or through a push reque
 On GitHub, navigate to the main page of the repository.
 
 ## To update our R markdown file: 
-0. * note that you can edit the code directly on Githubs website 
+*note that you can edit the code directly on Githubs website 
 but I doubt we will actually do that so* here is how to update the repository with changes to the Rmarkdown file:
 
 1. Download this repository so that there is a copy on your computer. To do this, click "clone or download"
@@ -25,7 +25,7 @@ and allows others who may be contributing to the project to understand what is g
 Changes done to our development branch will stay there until we update the master branch.
 
 *Note: if you commit directly to the master branch instead of doing the above, 
-it will completely overwrite the old versions of the code. *
+it will completely overwrite the old versions of the code.*
 
 4. To do so, and keep the master branch up to date, we want to pull the updates into the master branch 
 - this is done by doing a Pull Request.
@@ -53,7 +53,8 @@ Select the green New pull request button.
 3. At the bottom of the page, type a commit message that explains the change you made to the R markdown file. 
 
 The commit will post with your name on it, saying that you made changes and when the last changes were made. 
-** ! Important! ** For us, since we are working with three people and the project will consist of a lot of moving parts, 
+
+**!Important!** For us, since we are working with three people and the project will consist of a lot of moving parts, 
 choose the "Create new branch" option when posting the code. That way we can create a version history and it doesnt replace older version of the code, just in case something goes wrong like an error, and we can go back and look at previous versions.
 Name the branch by version number and keep the naming consistent. 
 
