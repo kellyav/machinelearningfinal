@@ -34,7 +34,7 @@ it will completely overwrite the old versions of the code.*
 4. To update the master branch, we need to 'pull' the updates from the development branch into the master branch 
 - this is done by doing a **Pull Request**.
 
-5.So to open a Pull Request for the changes done to the markdown file, click the tab next to 'issues' and 'actions'.
+5. So to open a Pull Request for the changes done to the markdown file, click the tab (located next to 'issues' and 'actions').
 Select the green New pull request button.
 
 6. The base should be set to master and the compare should say development. write a description of your changes.
@@ -59,7 +59,7 @@ Additions are highlighted in green, and subtractions are highlighted in red.
 
 The commit will post with your name on it, saying that you made changes and when the last changes were made. 
 
-**!Important!** For us, since we are working with three people and the project will consist of a lot of moving parts, 
+**! Important !** For us, since we are working with three people and the project will consist of a lot of moving parts, 
 choose the "Create new branch" option when posting the code. That way we can create a version history and it doesnt replace older version of the code, just in case something goes wrong like an error, and we can go back and look at previous versions.
 Name the branch by version number and keep the naming consistent. 
 
