@@ -13,8 +13,14 @@ See: https://github.com/kellyav/isat_2020/blob/master/pull_request.md for my Com
 4. At the bottom of the page, type a commit message that explains the change you made to the R markdown file. 
 
 The commit will post with your name on it, saying that you made changes and when the last changes were made. 
-! Important! For us, since we are working with three people and the project will consist of a lot of moving parts, 
+*! Important!* For us, since we are working with three people and the project will consist of a lot of moving parts, 
 choose the "Create new branch" option when posting the code. That way we can create a version history and it doesnt replace older version of the code, just in case something goes wrong like an error, and we can go back and look at previous versions.
 Name the branch by version number and keep the naming consistent. 
 
 5. Click Commit change/ propose file change.
+
+6. This prompts the page to Open a Pull Request. You can leave further comments here if you want to. 
+
+7. Then click Merge Pull Request.  
+
+8. Click Confirm merge
