@@ -1,5 +1,5 @@
-# machinelearningfinal
-Final project progress will be posted on this repo. 
+# Machine Learning Final Project
+Progress will be posted on this repo. 
 
 We will be working on the dataset *Breast Cancer Wisconsin (Diagnostic)*,  updated 4 years ago (Version 2) and posted on Kaggle: 
 https://www.kaggle.com/uciml/breast-cancer-wisconsin-data
