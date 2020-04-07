@@ -2,7 +2,7 @@
 
 You can do this one of two ways. Manually on the website or through a push request using Terminal (Command line) code. 
   For our purposes we can use the manual way.
-*See: https://github.com/kellyav/isat_2020/blob/master/pull_request.md for my Commandline How-to guide. *
+*See: https://github.com/kellyav/isat_2020/blob/master/pull_request.md for my Commandline How-to guide.*
 
 On GitHub, navigate to the main page of the repository.
 
