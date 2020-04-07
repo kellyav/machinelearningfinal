@@ -1,12 +1,13 @@
-# Beginers Guide to posting code on Github:
+# Beginers Guide to posting code (manually) on Github:
 
 You can do this one of two ways. Manually on the website or through a push request using Terminal (Command line) code. 
-  For our purposes we can use the manual way.
-*See: https://github.com/kellyav/isat_2020/blob/master/pull_request.md for my Commandline How-to guide.*
+  It is more challneging to do it the manual way, but this guide is an attempt to explain how to go about it.
+*See: https://github.com/kellyav/isat_2020/blob/master/git_upload_guide.md for my Commandline How-to guide.*
+
 
 On GitHub, navigate to the main page of the repository.
 
-## To update our R markdown file: 
+## To update changes to our R markdown file: 
 *note that you can edit the code directly on Githubs website 
 but I doubt we will actually do that so* here is how to update the repository with changes to the Rmarkdown file:
 
@@ -16,31 +17,34 @@ but I doubt we will actually do that so* here is how to update the repository wi
 Edit the R markdown file like you normally would and save that same file so that it is changed within the folder. 
 
 3. We will have a "development" branch. This will be where all the version history changes will be made. 
-You can also use your own branch you can update if that suits you better.
+*You can also create and use your own branch you can update if that suits you better.*
 
-Select this by clicking "Branch: ----" and clicking on development. 
-When a change is made, these changes are saved as commits. 
-Each time you commit it is a good idea to add a short commit message, this creates a readable history of the project 
-and allows others who may be contributing to the project to understand what is going on at a glance.
+Do this by clicking "Branch: ----" and clicking on development. 
+When a change is made, these changes are saved as _commits._
+
+Each time you commit it is a good idea to add a short commit description, to create a readable history of the project, 
+and it allows contributors to understand what is going on at a glance.
 Changes done to our development branch will stay there until we update the master branch.
 
 *Note: if you commit directly to the master branch instead of doing the above, 
 it will completely overwrite the old versions of the code.*
 
-4. To do so, and keep the master branch up to date, we want to pull the updates into the master branch 
-- this is done by doing a Pull Request.
 
-5. A Pull Request needs to be 'reviewed' before the changes are merged, 
+4. To update the master branch, we need to 'pull' the updates from the development branch into the master branch 
+- this is done by doing a **Pull Request**.
+
+5.So to open a Pull Request for the changes done to the markdown file, click the tab next to 'issues' and 'actions'.
+Select the green New pull request button.
+
+6. The base should be set to master and the compare should say development. write a description of your changes.
+
+7. A Pull Request needs to be 'reviewed' before the changes are merged, 
 basically to double check that what is about to be merged is actually what you want it to be.
 
-A Pull Request will highlight the differences in the content between branches. 
+It will highlight the differences in the content between branches. 
 Changes can be additions or removal of the content. 
 Additions are highlighted in green, and subtractions are highlighted in red.
 
-6. So to open a Pull Request for the changes done to the markdown file, click the tab next to 'issues' and 'actions'.
-Select the green New pull request button.
-
-7. The base should be set to master and the compare should say development. write a description of your changes.
 
 8. Click merge pull request and it will be updated!
 
