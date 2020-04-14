@@ -17,5 +17,5 @@ Data exploration and a Chi-square test will be used to determine which variables
 
 @ryandoesmath Ryan Folks 
 
-( @ lyndon ) Lyndon Swarey 
+(@lswarey) Lyndon Swarey 
 
