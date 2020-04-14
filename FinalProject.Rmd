@@ -1,6 +1,6 @@
 ---
-title: "Project"
-author: "Lyndon Swarey"
+title: "358 FinalProject"
+author: "Alexa Kelly, Ryan Folks, and Lyndon Swarey"
 date: "April 9, 2020"
 output: html_document
 ---
@@ -19,7 +19,7 @@ library(factoextra)
 ## Data
 ```{r}
 # Import data
-data_org <- read.csv("/Users/alexa/Downloads/Data/data.csv")
+data_org <- read.csv(".../Downloads/Data/bc_data.csv")
 
 # Create a new file to preserve orgininal data
 data <- data_org
