@@ -29,6 +29,8 @@ the optimal k. The elbow method was chosen by the contributors, because it creat
 
 K-NN and Naive Bayes will be run using all the predictor variables in the dataset. These same algorithms will also run with only the variables that are significant predictors of the type of cancer. The results will be compared to determine if there is a difference between the error rate of using all the variables and the error rate of using only the significant predictors. The error rates will also be examined to determine whether K-NN or Naive Bayes works best at predicting the type of tumor the breast cancer patient has.
 
+## Final Report
+Report is posted on https://github.com/kellyav/358_Final 
 
 
 ## Contributors: 
