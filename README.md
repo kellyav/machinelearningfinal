@@ -1,5 +1,5 @@
 # Machine Learning Final Project
-Progress will be posted on this repo. As of April 14th, this is what we have done. 
+Progress will be posted on this repo. As of May 1st, this is what we have done. 
 
 We will be working on the dataset *Breast Cancer Wisconsin (Diagnostic)*,  updated 4 years ago (Version 2) and posted on Kaggle: 
 https://www.kaggle.com/uciml/breast-cancer-wisconsin-data
@@ -30,7 +30,7 @@ the optimal k. The elbow method was chosen by the contributors, because it creat
 K-NN and Naive Bayes will be run using all the predictor variables in the dataset. These same algorithms will also run with only the variables that are significant predictors of the type of cancer. The results will be compared to determine if there is a difference between the error rate of using all the variables and the error rate of using only the significant predictors. The error rates will also be examined to determine whether K-NN or Naive Bayes works best at predicting the type of tumor the breast cancer patient has.
 
 ## Final Report
-Report is posted on https://github.com/kellyav/358_Final 
+Latex report is posted on https://github.com/kellyav/358_Final 
 
 
 ## Contributors: 
