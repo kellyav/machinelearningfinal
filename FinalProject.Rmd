@@ -1,6 +1,6 @@
 ---
-title: "358 FinalProject"
-author: "Alexa Kelly, Ryan Folks, and Lyndon Swarey"
+title: "Project"
+author: "Lyndon Swarey, Alexa Kelly, Ryan Folks"
 date: "April 9, 2020"
 output: html_document
 ---
@@ -14,12 +14,16 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(cluster)
 library(factoextra)
+library(caret)
+library(rpart)
+
+select = dplyr::select
 ```
 
 ## Data
 ```{r}
 # Import data
-data_org <- read.csv(".../Downloads/Data/bc_data.csv")
+data_org <- read.csv("/Users/alexa/Downloads/data.csv")
 
 # Create a new file to preserve orgininal data
 data <- data_org
@@ -44,20 +48,12 @@ set.seed(123)
 fviz_nbclust(data_3, kmeans, method = "wss") +
   labs(subtitle = "Elbow method: radius_mean")
 
-# Graph for silhouette method
-fviz_nbclust(data_3, kmeans, method = "silhouette") +
-  labs(subtitle = "Silhouette method: radius mean")
-
 # Kmeans wss method
 k_wss <- kmeans(data_3, centers = 3, nstart = 10)
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_3, centers = 2, nstart = 10)
-
 # Make new colums in for the new variables generated from kmeans
 data_3 <- data_3 %>% 
-  mutate(radius_mean_wss = k_wss$cluster,
-          radius_mean_sil = k_silhouette$cluster,
+  mutate(radius_mean_wss = as.factor(as.factor(k_wss$cluster)),
           new_ID = seq(1:569))
 ```
 
@@ -74,21 +70,13 @@ set.seed(123)
 fviz_nbclust(data_4, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: texture_mean")
 
-# Graph for silhouette method
-fviz_nbclust(data_4, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhouette method: texture_mean")
-
 # Kmeans wss method
 k_wss <- kmeans(data_4, centers = 3, nstart = 10)
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_4, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_4 <- data_4 %>% 
-  mutate(texture_mean_wss = k_wss$cluster,
-          texture_mean_sil = k_silhouette$cluster,
-          new_ID = seq(1:569))
+  mutate(texture_mean_wss = as.factor(as.factor(k_wss$cluster)),
+         new_ID = seq(1:569))
 ```
 
 ### perimeter_mean
@@ -104,20 +92,12 @@ set.seed(123)
 fviz_nbclust(data_5, kmeans, method = "wss") +
   labs(subtitle = "Elbow method: perimeter_mean")
 
-# Graph for silhouette method
-fviz_nbclust(data_5, kmeans, method = "silhouette") +
-  labs(subtitle = "Silhouette method: perimeter_mean")
-
 # Kmeans wss method
 k_wss <- kmeans(data_5, centers = 3, nstart = 10)
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_5, centers = 2, nstart = 10)
-
 # Make new colums in data_3 for the new variables generated from kmeans
 data_5 <- data_5 %>% 
-  mutate(perimeter_mean_wss = k_wss$cluster,
-          perimeter_mean_sil = k_silhouette$cluster,
+  mutate(perimeter_mean_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -134,20 +114,12 @@ set.seed(123)
 fviz_nbclust(data_6, kmeans, method = "wss") +
   labs(subtitle = "Elbow method: area_mean")
 
-# Graph for silhouette method
-fviz_nbclust(data_6, kmeans, method = "silhouette") +
-  labs(subtitle = "Silhouette method: area_mean")
-
 # Kmeans wss method
-k_wss <- kmeans(data_6, centers = 4, nstart = 10)
-
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_6, centers = 2, nstart = 10)
+k_wss <- kmeans(data_6, centers = 3, nstart = 10)
 
 # Make new colums for the new variables generated from kmeans
 data_6 <- data_6 %>% 
-  mutate(area_mean_wss = k_wss$cluster,
-          area_mean_sil = k_silhouette$cluster,
+  mutate(area_mean_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -164,20 +136,12 @@ set.seed(123)
 fviz_nbclust(data_7, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: smoothness_mean")
 
-# Graph for silhouette method
-fviz_nbclust(data_7, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: smoothness_mean")
-
 # Kmeans wss method
 k_wss <- kmeans(data_7, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_7, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_7 <- data_7 %>% 
-  mutate(smoothness_mean_wss = k_wss$cluster,
-          smoothness_mean_sil = k_silhouette$cluster,
+  mutate(smoothness_mean_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -194,20 +158,12 @@ set.seed(123)
 fviz_nbclust(data_8, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: compactness_mean")
 
-# Graph for silhouette method
-fviz_nbclust(data_8, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: compactness_mean")
-
 # Kmeans wss method
 k_wss <- kmeans(data_8, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_8, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_8 <- data_8 %>% 
-  mutate(compactness_mean_wss = k_wss$cluster,
-          compactness_mean_sil = k_silhouette$cluster,
+  mutate(compactness_mean_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -224,20 +180,12 @@ set.seed(123)
 fviz_nbclust(data_9, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: concavity_mean")
 
-# Graph for silhouette method
-fviz_nbclust(data_9, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: concavity_mean")
-
 # Kmeans wss method
 k_wss <- kmeans(data_9, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_9, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_9 <- data_9 %>% 
-  mutate(concavity_mean_wss = k_wss$cluster,
-          concavity_mean_sil = k_silhouette$cluster,
+  mutate(concavity_mean_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -254,20 +202,12 @@ set.seed(123)
 fviz_nbclust(data_10, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: concave.points_mean")
 
-# Graph for silhouette method
-fviz_nbclust(data_10, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: concave.points_mean")
-
 # Kmeans wss method
 k_wss <- kmeans(data_10, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_10, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_10 <- data_10 %>% 
-  mutate(concave.points_mean_wss = k_wss$cluster,
-          concave.points_mean_sil = k_silhouette$cluster,
+  mutate(concave.points_mean_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -284,20 +224,12 @@ set.seed(123)
 fviz_nbclust(data_11, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: symmetry_mean")
 
-# Graph for silhouette method
-fviz_nbclust(data_11, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: symmetry_mean")
-
 # Kmeans wss method
 k_wss <- kmeans(data_11, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_11, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_11 <- data_11 %>% 
-  mutate(symmetry_mean_wss = k_wss$cluster,
-          symmetry_mean_sil = k_silhouette$cluster,
+  mutate(symmetry_mean_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -314,20 +246,12 @@ set.seed(123)
 fviz_nbclust(data_12, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: fractal_dimension_mean")
 
-# Graph for silhouette method
-fviz_nbclust(data_12, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: fractal_dimension_mean")
-
 # Kmeans wss method
 k_wss <- kmeans(data_12, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_12, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_12 <- data_12 %>% 
-  mutate(fractal_dimension_mean_wss = k_wss$cluster,
-          fractal_dimension_mean_sil = k_silhouette$cluster,
+  mutate(fractal_dimension_mean_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -346,20 +270,12 @@ set.seed(123)
 fviz_nbclust(data_13, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: radius_se")
 
-# Graph for silhouette method
-fviz_nbclust(data_13, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: radius_se")
-
 # Kmeans wss method
 k_wss <- kmeans(data_13, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_13, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_13 <- data_13 %>% 
-  mutate(radius_se_wss = k_wss$cluster,
-          radius_se_sil = k_silhouette$cluster,
+  mutate(radius_se_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -376,20 +292,12 @@ set.seed(123)
 fviz_nbclust(data_14, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: texture_se")
 
-# Graph for silhouette method
-fviz_nbclust(data_14, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: texture_se")
-
 # Kmeans wss method
 k_wss <- kmeans(data_14, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_14, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_14 <- data_14 %>% 
-  mutate(texture_se_wss = k_wss$cluster,
-          texture_se_sil = k_silhouette$cluster,
+  mutate(texture_se_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -406,20 +314,12 @@ set.seed(123)
 fviz_nbclust(data_15, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: perimeter_se")
 
-# Graph for silhouette method
-fviz_nbclust(data_15, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: perimeter_se")
-
 # Kmeans wss method
 k_wss <- kmeans(data_15, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_15, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_15 <- data_15 %>% 
-  mutate(perimeter_se_wss = k_wss$cluster,
-          perimeter_se_sil = k_silhouette$cluster,
+  mutate(perimeter_se_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -436,20 +336,12 @@ set.seed(123)
 fviz_nbclust(data_16, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: area_se")
 
-# Graph for silhouette method
-fviz_nbclust(data_16, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: area_se")
-
 # Kmeans wss method
 k_wss <- kmeans(data_16, centers = 2, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_16, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_16 <- data_16 %>% 
-  mutate(area_se_wss = k_wss$cluster,
-          area_se_sil = k_silhouette$cluster,
+  mutate(area_se_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -466,20 +358,12 @@ set.seed(123)
 fviz_nbclust(data_17, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: smoothness_se")
 
-# Graph for silhouette method
-fviz_nbclust(data_17, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: smoothness_se")
-
 # Kmeans wss method
 k_wss <- kmeans(data_17, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_17, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_17 <- data_17 %>% 
-  mutate(smoothness_se_wss = k_wss$cluster,
-          smoothness_se_sil = k_silhouette$cluster,
+  mutate(smoothness_se_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -496,20 +380,12 @@ set.seed(123)
 fviz_nbclust(data_18, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: compactness_se")
 
-# Graph for silhouette method
-fviz_nbclust(data_18, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: compactness_se")
-
 # Kmeans wss method
 k_wss <- kmeans(data_18, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_18, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_18 <- data_18 %>% 
-  mutate(compactness_se_wss = k_wss$cluster,
-          compactness_se_sil = k_silhouette$cluster,
+  mutate(compactness_se_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -526,20 +402,12 @@ set.seed(123)
 fviz_nbclust(data_19, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: concavity_se")
 
-# Graph for silhouette method
-fviz_nbclust(data_19, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: concavity_se")
-
 # Kmeans wss method
-k_wss <- kmeans(data_19, centers = 3, nstart = 10) 
-
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_19, centers = 2, nstart = 10)
+k_wss <- kmeans(data_19, centers = 2, nstart = 10) 
 
 # Make new colums for the new variables generated from kmeans
 data_19 <- data_19 %>% 
-  mutate(concavity_se_wss = k_wss$cluster,
-          concavity_se_sil = k_silhouette$cluster,
+  mutate(concavity_se_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -556,20 +424,12 @@ set.seed(123)
 fviz_nbclust(data_20, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: concave.points_se")
 
-# Graph for silhouette method
-fviz_nbclust(data_20, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: concave.points_se")
-
 # Kmeans wss method
 k_wss <- kmeans(data_20, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_20, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_20 <- data_20 %>% 
-  mutate(concave.points_se_wss = k_wss$cluster,
-          concave.points_se_sil = k_silhouette$cluster,
+  mutate(concave.points_se_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -586,20 +446,12 @@ set.seed(123)
 fviz_nbclust(data_21, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: symmetry_se")
 
-# Graph for silhouette method
-fviz_nbclust(data_21, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: symmetry_se")
-
 # Kmeans wss method
 k_wss <- kmeans(data_21, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_21, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_21 <- data_21 %>% 
-  mutate(symmetry_se_wss = k_wss$cluster,
-          symmetry_se_sil = k_silhouette$cluster,
+  mutate(symmetry_se_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -616,20 +468,12 @@ set.seed(123)
 fviz_nbclust(data_22, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: fractal_dimension_se")
 
-# Graph for silhouette method
-fviz_nbclust(data_22, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: fractal_dimension_se")
-
 # Kmeans wss method
 k_wss <- kmeans(data_22, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_22, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_22 <- data_22 %>% 
-  mutate(fractal_dimension_se_wss = k_wss$cluster,
-          fractal_dimension_se_sil = k_silhouette$cluster,
+  mutate(fractal_dimension_se_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -648,23 +492,14 @@ set.seed(123)
 fviz_nbclust(data_23, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: radius_worst")
 
-# Graph for silhouette method
-fviz_nbclust(data_23, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: radius_worst")
-
 # Kmeans wss method
 k_wss <- kmeans(data_23, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_23, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_23 <- data_23 %>% 
-  mutate(radius_worst_wss = k_wss$cluster,
-          radius_worst_sil = k_silhouette$cluster,
+  mutate(radius_worst_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
-
 
 ### texture_worst
 ```{r}
@@ -679,23 +514,14 @@ set.seed(123)
 fviz_nbclust(data_24, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: texture_worst")
 
-# Graph for silhouette method
-fviz_nbclust(data_24, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: texture_worst")
-
 # Kmeans wss method
 k_wss <- kmeans(data_24, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_24, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_24 <- data_24 %>% 
-  mutate(texture_worst_wss = k_wss$cluster,
-          texture_worst_sil = k_silhouette$cluster,
+  mutate(texture_worst_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
-
 
 ### perimeter_worst
 ```{r}
@@ -710,20 +536,12 @@ set.seed(123)
 fviz_nbclust(data_25, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: perimeter_worst")
 
-# Graph for silhouette method
-fviz_nbclust(data_25, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method:perimeter_worst")
-
 # Kmeans wss method
 k_wss <- kmeans(data_25, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_25, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_25 <- data_25 %>% 
-  mutate(perimeter_worst_wss = k_wss$cluster,
-          perimeter_worst_sil = k_silhouette$cluster,
+  mutate(perimeter_worst_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -741,20 +559,12 @@ set.seed(123)
 fviz_nbclust(data_26, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: area_worst")
 
-# Graph for silhouette method
-fviz_nbclust(data_26, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: area_worst")
-
 # Kmeans wss method
 k_wss <- kmeans(data_26, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_26, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_26 <- data_26 %>% 
-  mutate(area_worst_wss = k_wss$cluster,
-          area_worst_sil = k_silhouette$cluster,
+  mutate(area_worst_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -772,20 +582,12 @@ set.seed(123)
 fviz_nbclust(data_27, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: smoothness_worst")
 
-# Graph for silhouette method
-fviz_nbclust(data_27, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: smoothness_worst")
-
 # Kmeans wss method
 k_wss <- kmeans(data_27, centers = 4, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_27, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_27 <- data_27 %>% 
-  mutate(smoothness_worst_wss = k_wss$cluster,
-          smoothness_worst_sil = k_silhouette$cluster,
+  mutate(smoothness_worst_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -803,21 +605,13 @@ set.seed(123)
 fviz_nbclust(data_28, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: compactness_worst")
 
-# Graph for silhouette method
-fviz_nbclust(data_28, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: compactness_worst")
-
 # Kmeans wss method
 k_wss <- kmeans(data_28, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_28, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_28 <- data_28 %>% 
-  mutate(compactness_worst_wss = k_wss$cluster,
-          compactness_worst_sil = k_silhouette$cluster,
-          new_ID = seq(1:569))
+  mutate(compactness_worst_wss = as.factor(k_wss$cluster),
+         new_ID = seq(1:569))
 ```
 
 
@@ -834,20 +628,12 @@ set.seed(123)
 fviz_nbclust(data_29, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: concavity_worst")
 
-# Graph for silhouette method
-fviz_nbclust(data_29, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: concavity_worst")
-
 # Kmeans wss method
 k_wss <- kmeans(data_29, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_29, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_29 <- data_29 %>% 
-  mutate(concavity_worst_wss = k_wss$cluster,
-          concavity_worst_sil = k_silhouette$cluster,
+  mutate(concavity_worst_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
@@ -864,24 +650,16 @@ set.seed(123)
 fviz_nbclust(data_30, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: concave.points_worst")
 
-# Graph for silhouette method
-fviz_nbclust(data_30, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: concave.points_worst")
-
 # Kmeans wss method
 k_wss <- kmeans(data_30, centers = 3, nstart = 10) 
 
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_30, centers = 2, nstart = 10)
-
 # Make new colums for the new variables generated from kmeans
 data_30 <- data_30 %>% 
-  mutate(concave.points_worst_wss = k_wss$cluster,
-          concave.points_worst_sil = k_silhouette$cluster,
+  mutate(concave.points_worst_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
-### symmetry_worst
+#### symmetry_worst
 ```{r}
 # Select radius_worst
 data_31 <- data %>% 
@@ -894,24 +672,16 @@ set.seed(123)
 fviz_nbclust(data_31, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: symmetry_worst")
 
-# Graph for silhouette method
-fviz_nbclust(data_31, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: symmetry_worst")
-
 # Kmeans wss method
-k_wss <- kmeans(data_31, centers = 4, nstart = 10) 
-
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_31, centers = 8, nstart = 10)
+k_wss <- kmeans(data_31, centers = 3, nstart = 10) 
 
 # Make new colums for the new variables generated from kmeans
 data_31 <- data_31 %>% 
-  mutate(symmetry_worst_wss = k_wss$cluster,
-          symmetry_worst_sil = k_silhouette$cluster,
+  mutate(symmetry_worst_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
-### fractal_dimension_worst
+#### fractal_dimension_worst
 ```{r}
 # Select radius_worst
 data_32 <- data %>% 
@@ -924,24 +694,16 @@ set.seed(123)
 fviz_nbclust(data_32, kmeans, method = "wss") + 
   labs(subtitle = "Elbow method: fractal_dimension_worst")
 
-# Graph for silhouette method
-fviz_nbclust(data_32, kmeans, method = "silhouette") + 
-  labs(subtitle = "Silhoutte method: fractal_dimension_worst")
-
 # Kmeans wss method
-k_wss <- kmeans(data_32, centers = 4, nstart = 10) 
-
-# Kmeans silhouette methos
-k_silhouette <- kmeans(data_32, centers = 2, nstart = 10)
+k_wss <- kmeans(data_32, centers = 3, nstart = 10) 
 
 # Make new colums for the new variables generated from kmeans
 data_32 <- data_32 %>% 
-  mutate(fractal_dimension_worst_wss = k_wss$cluster,
-          fractal_dimension_worst_sil = k_silhouette$cluster,
+  mutate(fractal_dimension_worst_wss = as.factor(k_wss$cluster),
           new_ID = seq(1:569))
 ```
 
-
+### Merge Datasets
 ```{r}
 #Select the first 2 row the data file
 data_new <- data %>% 
@@ -953,7 +715,7 @@ mymerge <- function(x, y){
   return(df)}
 
 # Merge files
-data_new <-Reduce(mymerge, list(data_new, data_3,data_4, data_5, data_6,
+data_new <-Reduce( mymerge, list(data_new, data_3,data_4, data_5, data_6,
                                data_7, data_8, data_9, data_10, data_11,
                                data_12, data_13, data_14, data_15, data_16,
                                data_17, data_18, data_19, data_20, data_21,
@@ -961,26 +723,475 @@ data_new <-Reduce(mymerge, list(data_new, data_3,data_4, data_5, data_6,
                                data_27, data_28, data_29, data_30, data_31, data_32))
 
 # Arrange the columns
-data_new <- data_new[c(1,2,3,4,7,10,13,16,19,22,25,28,
-                         31,34,37,40,43,46,49,52,55,58,
-                         61,64,67,70,73,76,79,82,85,88,
-                         91,5,8,11,14,17,20,23,26,29,
-                         32,35,38,41,44,47,50,53,56,59,
-                         62,65,68,71,74,77,80,83,86,89,92,6,
-                       9,12,15,18,21,24,27,30,33,36,39,42,45,
-                       48,51,54,57,60,63,66,69,72,75,78,81,
-                       84,87,90,93)]
+data_new <- data_new[c(1,2,3,4,6,8,10,12,14,16,18,20,
+                       22,24,26,28,30,32,34,36,38,40,
+                       42,44,46,48,50,52,54,56,58,60,62,
+                       5,7,9,11,13,15,17,19,21,23,25,27,
+                       29,31,33,35,37,39,41,43,45,47,
+                       49,51,53,55,57,59,61,63)]
+```
+
+### Scale Continous Variables
+```{r}
+# Rescale Variables to have a mean of 0 and standard deviation of 1
+data_new_scale <-data_new %>% 
+  select(c(4:33)) %>% 
+  mutate_all(funs(scale = ((.)-mean(.))/sd(.))) %>% 
+  select(-c(1:30)) %>% 
+  mutate(new_ID = seq(c(1:569)))
+
+# Merge data_new_scale with data_new
+data_new <- merge(data_new, data_new_scale, by = "new_ID")
+
+```
+
+### Transform Variables to Make Them Normal
+```{r}
+# Select continous variables to be transformed
+data_new_trans <-data_new %>% 
+  select(c(4:33)) %>% 
+  mutate_all(funs(trans = (.))) %>% 
+  select(-c(1:30))
+
+# Apply Box Cox Transformation
+process_vars <- preProcess(data_new_trans, method = c("BoxCox"))
+
+data_new_trans <- predict(process_vars, data_new_trans)
+
+# Create new variable to merge on
+data_new_trans <- data_new_trans %>% 
+  mutate(new_ID = seq(c(1:569)))
+
+# Merge data_new_trans with data_new
+data_new <- merge(data_new, data_new_trans, by = "new_ID")
+```
+
+## Variable Selection and Data Processing
+
+### Split Dataset With All Variables
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Split data into training and test datasets
+index <- createDataPartition(data_new$diagnosis,   
+                      p = 0.7, 
+                      list = FALSE) 
+
+train_data <- data_new[index, ]
+test_data <- data_new[-index, ]
+
+# Upsample the data
+train_data_up <- upSample(x = train_data[, -ncol(train_data)],
+                     y = train_data$diagnosis)
+
+# Downsample the data
+train_data_down <- downSample(x = train_data[, -ncol(train_data)],
+                     y = train_data$diagnosis)
+
+```
+
+
+### Chi-square Test
+```{r}
+# Select the variable to be use in the Chi-square test
 data_chisquare <- data_new %>%
-  select(c(34:93,3))
+  select(c(34:63,3))
 
-  
-
+# Run the Chi-square test
 myTests <- lapply(data_chisquare[-length(data_chisquare)], function(x) chisq.test(table(as.factor(x), data_chisquare$diagnosis)))
 unlist(sapply(myTests, "[", "p.value"))
 
+# Select the statistically significant variables at .001
+data_chisquare <- data_new %>% 
+  select(-c(smoothness_se_wss, concavity_se_wss, 
+            symmetry_se_wss, fractal_dimension_mean_wss, 
+            texture_se_wss, fractal_dimension_se_wss,
+            smoothness_se, concavity_se, symmetry_se, 
+            fractal_dimension_mean, texture_se, fractal_dimension_se,
+            smoothness_se_scale, concavity_se_scale, 
+            symmetry_se_scale, fractal_dimension_mean_scale, 
+            texture_se_scale, fractal_dimension_se_scale,
+            smoothness_se_trans, concavity_se_trans, 
+            symmetry_se_trans, fractal_dimension_mean_trans, 
+            texture_se_trans, fractal_dimension_se_trans))
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Split data into training and test datasets
+index <- createDataPartition(data_chisquare$diagnosis,   
+                      p = 0.7, 
+                      list = FALSE) 
+
+train_chisquare <- data_chisquare[index, ]
+test_chisquare <- data_chisquare[-index, ]
+
+# Upsample the data
+train_chisquare_up <- upSample(x = train_chisquare[, -ncol(train_chisquare)],
+                     y = train_chisquare$diagnosis)
+
+# Downsample the data
+train_chisquare_down <- downSample(x = train_chisquare[, -ncol(train_chisquare)],
+                     y = train_chisquare$diagnosis)
+```
+
+### Classification Tree
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Fit the classification tree model
+data_classtree <- rpart(diagnosis ~ ., data = data_new,
+                      method = "class")
+
+# View the variables selected
+print(data_classtree)
+
+# Select the variables
+data_classtree <- data_new %>% 
+  select(c(diagnosis, radius_worst, radius_worst_wss, radius_worst_scale, radius_worst_trans,
+           concave.points_worst, concave.points_worst_wss, concave.points_worst_scale,
+           concave.points_worst_trans, texture_worst, texture_worst_wss, 
+           texture_worst_scale, texture_worst_trans))
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Split data into training and test datasets
+index <- createDataPartition(data_classtree$diagnosis,   
+                      p = 0.7, 
+                      list = FALSE) 
+
+train_classtree <- data_classtree[index, ]
+test_classtree <- data_classtree[-index, ]
+
+# Upsample the data
+train_classtree_up <- upSample(x = train_classtree[, -ncol(train_classtree)],
+                     y = train_classtree$diagnosis)
+
+# Downsample the data
+train_classtree_down <- downSample(x = train_classtree[, -ncol(train_classtree)],
+                     y = train_classtree$diagnosis)
+```
+
+## K-NN
+
+### All Variables 
+```{r}
+# Select scaled variables
+train_data_knn <- train_data %>% 
+  select(diagnosis, ends_with("scale"))
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Fit the model
+knn_fit = train(diagnosis~.,
+                      data = train_data_knn,
+                      method = "knn",
+                     trControl = trainControl(method = "cv", number = 10))
+
+# Make predictions using the test dataset
+knnPredict = predict(knn_fit, newdata = test_data)
+
+# Confusion matrix
+confusionMatrix(knnPredict, test_data$diagnosis)
+```
+
+### Chisquare
+```{r}
+# Select scaled variables
+train_data_knn <- train_chisquare %>% 
+  select(diagnosis, ends_with("scale"))
+
+# Set the seed for reproducibility
+set.seed(123)
+
+# Fit the model
+knn_fit = train(diagnosis~.,
+                      data = train_data_knn,
+                      method = "knn",
+                     trControl = trainControl(method = "cv", number = 10))
+
+# Make predictions using the test dataset
+knnPredict = predict(knn_fit, newdata = test_chisquare)
+
+# Confusion matrix
+confusionMatrix(knnPredict, test_chisquare$diagnosis)
+```
+
+### Classification Tree
+```{r}
+# Select scaled variables
+train_data_knn <- train_classtree %>% 
+  select(diagnosis, ends_with("scale"))
+
+# Set the seed for reproducibility
+set.seed(123)
+
+# Fit the model
+knn_fit = train(diagnosis~.,
+                      data = train_data_knn,
+                      method = "knn",
+                     trControl = trainControl(method = "cv", number = 10))
+
+# Make predictions using the test dataset
+knnPredict = predict(knn_fit, newdata = test_classtree)
+
+# Confusion matrix
+confusionMatrix(knnPredict, test_classtree$diagnosis)
+```
+
+## Naive Bayes
+
+### All Variables 
+```{r}
+# Select scaled variables
+train_data_nb <- train_data %>% 
+  select(diagnosis, ends_with("wss"))
+  
+# Set seed for reproducibility
+set.seed(123)
+
+# Fit the model
+nb_fit = train(diagnosis~., data = train_data_nb,
+                method = "naive_bayes",
+                trControl = trainControl(method = "cv", number = 10))
+
+# Make predictions using the test dataset
+nbPredict = predict(nb_fit, newdata = test_data)
+
+# Confusion matrix
+confusionMatrix(nbPredict, test_data$diagnosis)
+```
+
+### Chisquare
+```{r}
+# Select scaled variables
+train_data_nb <- train_chisquare %>% 
+  select(diagnosis, ends_with("wss"))
+
+# Set the seed for reproducibility
+set.seed(123)
+
+# Fit the model
+nb_fit = train(diagnosis~.,
+                      data = train_data_nb,
+                      method = "naive_bayes",
+                     trControl = trainControl(method = "cv", number = 10))
+
+# Make predictions using the test dataset
+nbPredict= predict(nb_fit, newdata = test_chisquare)
+
+# COnfusion matrix
+confusionMatrix(nbPredict, test_chisquare$diagnosis)
+```
+
+### Classification Tree
+```{r}
+# Select scaled variables
+train_data_nb <- train_classtree %>% 
+  select(diagnosis, ends_with("wss"))
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Fit the model
+nb_fit = train(diagnosis~.,
+                      data = train_data_nb,
+                      method = "naive_bayes",
+                     trControl = trainControl(method = "cv", number = 10))
+
+# Make predictions using the test dataset
+nbPredict = predict(nb_fit, newdata = test_classtree)
+
+# Confusion matrix
+confusionMatrix(nbPredict, test_classtree$diagnosis)
 ```
 
 ```{r}
-colnames(data)
+#Load reshape2, needed for melt to convert from wide to long
+library(reshape2)
 
+#Convert to long format
+melt_df<-melt(data_new_trans[-32])
+
+# Box plot of all variables
+ggplot(melt_df, aes(x=value)) + 
+  geom_histogram()+
+  facet_wrap(~variable, scale="free")
 ```
+
+Most variabels are *roughly* normal, except for the new_ID variable, which needs to be taken out anyway.
+Our target variable, diagnosis, needs to be added.
+
+```{r}
+data_new_trans_all = data_new_trans %>% 
+  select(-c(new_ID)) %>% 
+  mutate(diagnosis = data_new$diagnosis)
+```
+
+## LDA
+
+### All Variables
+
+Fitting the model with all variables.
+```{r}
+library(MASS)
+set.seed(123)
+
+index = createDataPartition(data_new_trans_all$diagnosis, p = 0.7, list = FALSE)
+train_new_trans_all = data_new_trans_all[index, ]
+test_new_trans_all = data_new_trans_all[-index, ]
+
+lda_all = lda(diagnosis~., data = train_new_trans_all)
+lda_all
+```
+
+Visualizing the model.
+```{r}
+lda_predict_all = predict(lda_all)
+ldahist(data = lda_predict_all$x[,1], g=train_new_trans_all$diagnosis)
+```
+There is some overlap between the malignant and benign classes, but not too much.
+
+Prediction accuracy
+```{r}
+library(caret)
+# Make prediction using the fitted model on test data
+pred_test = predict(lda_all, test_new_trans_all)
+
+# Extract predicted class
+pred_class = as.factor(pred_test$class)
+
+#Confustion Matirx
+confusionMatrix(pred_class, as.factor(test_new_trans_all$diagnosis))
+```
+
+### Chi-Squared Variables
+
+Lets perform the same actions with the 25 variables that were determined signifiant by the chi-square test.
+```{r}
+data_new_trans_chisq = data_chisquare %>% 
+  select(ends_with("trans"), diagnosis)
+```
+
+```{r}
+set.seed(123)
+
+index = createDataPartition(data_new_trans_chisq$diagnosis, p = 0.7, list = FALSE)
+train_new_trans_chisq = data_new_trans_chisq[index, ]
+test_new_trans_chisq = data_new_trans_chisq[-index, ]
+
+lda_chisq <- lda(diagnosis~., data = train_new_trans_chisq)
+lda_chisq
+```
+
+```{r}
+lda_predict_chisq = predict(lda_chisq)
+ldahist(data = lda_predict_chisq$x[,1], g=train_new_trans_chisq$diagnosis)
+```
+This graph doesn't look to be too much different from the one including all the variables. Lets test its accuracy to find out if it is an improvement or not.
+
+```{r}
+# Make prediction using the fitted model on test data
+pred_test = predict(lda_chisq, test_new_trans_chisq)
+
+# Extract predicted class
+pred_class = as.factor(pred_test$class)
+
+#Confustion Matirx
+confusionMatrix(pred_class, as.factor(test_new_trans_chisq$diagnosis))
+```
+The accuracy of the model actually seems to have reduced. Lets fit the model one more time on the variables the classification tree determined to be important.
+
+### Classification Tree Variables
+```{r}
+data_new_trans_tree = data_classtree %>% 
+  select(ends_with("trans"), diagnosis)
+```
+
+Only three predictors are used by the classification tree. Lets fit the model and assess its accuracy.
+
+```{r}
+set.seed(123)
+
+index = createDataPartition(data_new_trans_tree$diagnosis, p = 0.7, list = FALSE)
+train_new_trans_tree = data_new_trans_tree[index, ]
+test_new_trans_tree = data_new_trans_tree[-index, ]
+
+lda_tree = lda(diagnosis~., data = train_new_trans_tree)
+lda_tree
+```
+
+```{r}
+lda_predict_tree = predict(lda_tree)
+ldahist(data = lda_predict_tree$x[,1], g=train_new_trans_tree$diagnosis)
+```
+This model looks to be worse than the other two.
+
+```{r}
+# Make prediction using the fitted model on test data
+pred_test = predict(lda_tree, test_new_trans_tree)
+
+# Extract predicted class
+pred_class = as.factor(pred_test$class)
+
+#Confustion Matirx
+confusionMatrix(pred_class, as.factor(test_new_trans_tree$diagnosis))
+```
+This model has the same accuracy as the chi-square model, but makes different mistakes.
+
+
+## QDA
+
+### All Variables.
+```{r}
+qda_all = qda(diagnosis~., data = train_new_trans_all)
+qda_all
+
+# Make prediction using the fitted model on test data
+pred_test = predict(qda_all, test_new_trans_all)
+
+# Extract predicted class
+pred_class = as.factor(pred_test$class)
+
+#Confustion Matirx
+confusionMatrix(pred_class, as.factor(test_new_trans_all$diagnosis))
+```
+This model has 93% accuracy, whereas the LDA model for all variables had a 97% accuracy.
+
+### Chi-Squared Variables
+
+```{r}
+qda_chisq = qda(diagnosis~., data = train_new_trans_chisq)
+qda_chisq
+
+# Make prediction using the fitted model on test data
+pred_test = predict(qda_chisq, test_new_trans_chisq)
+
+# Extract predicted class
+pred_class = as.factor(pred_test$class)
+
+#Confustion Matirx
+confusionMatrix(pred_class, as.factor(test_new_trans_chisq$diagnosis))
+```
+The accuracy of this model appears to be an improvement over the QDA model with all the variables. Its accuracy is about the same as the LDA models using the chi-square and classification tree variables.
+
+### Classification Tree Variables
+
+```{r}
+qda_tree = qda(diagnosis~., data = train_new_trans_tree)
+qda_tree
+
+# Make prediction using the fitted model on test data
+pred_test = predict(qda_tree, test_new_trans_tree)
+
+# Extract predicted class
+pred_class = as.factor(pred_test$class)
+
+#Confustion Matirx
+confusionMatrix(pred_class, as.factor(test_new_trans_tree$diagnosis))
+```
+Again, this appears to have about the same accuracy as the Chi-Square variables.
