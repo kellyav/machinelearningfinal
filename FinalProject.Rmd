@@ -2,7 +2,9 @@
 title: "Final Project"
 author: "Lyndon Swarey, Ryan Folk, Alexa Kelly"
 date: "May 7, 2020"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -935,6 +937,14 @@ set.seed(123)
 # Fit the classification tree model
 data_classtree <- rpart(diagnosis ~ ., data = data_new,
                       method = "class")
+
+#plot tree
+library(RColorBrewer)
+library(rattle)
+fancyRpartPlot(data_classtree, palette="RdYlGn", sub=" ")
+```
+
+```{r }
 
 # View the variables selected
 print(data_classtree)
