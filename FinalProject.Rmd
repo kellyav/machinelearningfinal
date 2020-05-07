@@ -1,7 +1,7 @@
 ---
-title: "Project"
-author: "Lyndon Swarey, Alexa Kelly, Ryan Folks"
-date: "April 9, 2020"
+title: "Final Project"
+author: "Lyndon Swarey, Ryan Folk, Alexa Kelly"
+date: "May 7, 2020"
 output: html_document
 ---
 
@@ -10,20 +10,26 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Packages
-```{r}
+
+The following packages are required. Tidyverse is used for data manipulation, cluster is used for k-means clustering, factoextra is used for visualizing the cluster results, caret package is used to split the data, and fit the K-NN model, rpart is used to fit the classification tree and visualize the results, MASS is used to fit the linear and quadratic discriminant analysis, reshape2 is used to convert the data from wide to long and "select <- dplyr::select" avoids conflict with the MASS package.
+```{r, warning=FALSE, message=FALSE}
 library(tidyverse)
 library(cluster)
 library(factoextra)
 library(caret)
 library(rpart)
-
-select = dplyr::select
+library(MASS)
+library(reshape2)
+select<-dplyr::select
 ```
 
 ## Data
+
+The data was loaded using read.csv. To preserve the originial dataset, a new dataset was created from the original. A new ID variable was also created.
+
 ```{r}
 # Import data
-data_org <- read.csv("/Users/alexa/Downloads/data.csv")
+data_org <- read.csv("/Users/alexa/Desktop/data.csv")
 
 # Create a new file to preserve orgininal data
 data <- data_org
@@ -33,15 +39,25 @@ data <- data %>%
   mutate(new_ID = seq(1:569))
 ```
 
+## Check for Missing Values
+
+The following code checked for missing values. This data set does not have any missing values
+```{r}
+anyNA(data)
+```
+
+
 ## Variable clustering: mean
 
 ### radius_mean
+
+The radius_mean variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_3 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select radius_mean
 data_3 <- data %>% 
   select(radius_mean)
 
-# Set seed
+# Set seed for reproducibility
 set.seed(123)
 
 # Graph for wws method
@@ -58,12 +74,14 @@ data_3 <- data_3 %>%
 ```
 
 ### texture_mean
+
+The texture_mean variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_4 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select texture_mean
 data_4 <- data %>% 
   select(texture_mean)
 
-# Set seed
+# Set seed for reproducibility
 set.seed(123)
 
 # Graph for wws method
@@ -80,12 +98,14 @@ data_4 <- data_4 %>%
 ```
 
 ### perimeter_mean
+
+The perimeter_mean variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_5 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select perimeter_mean
 data_5 <- data %>% 
   select(perimeter_mean)
 
-# Set seed
+# Set seed for reproducibilty
 set.seed(123)
 
 # Graph for wws method
@@ -102,6 +122,8 @@ data_5 <- data_5 %>%
 ```
 
 ### area_mean
+
+The area_mean variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_6 was created for the cluster results and a new_ID variable was made as well. The optimal k appears to be at 4 but needed to be adjusted in order maintain the minimum number of observations for each catorgory for the Chi-square test.
 ```{r}
 # Select area_mean
 data_6 <- data %>% 
@@ -124,6 +146,8 @@ data_6 <- data_6 %>%
 ```
 
 ### smoothness_mean
+
+The smoothness_mean variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_7 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select smoothness_mean
 data_7 <- data %>% 
@@ -146,6 +170,8 @@ data_7 <- data_7 %>%
 ```
 
 ### compactness_mean
+
+The compactness_mean variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_8 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select smoothness_mean
 data_8 <- data %>% 
@@ -168,6 +194,8 @@ data_8 <- data_8 %>%
 ```
 
 ### concavity_mean
+
+The concavity_mean variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_9 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select concavity_mean
 data_9 <- data %>% 
@@ -190,6 +218,8 @@ data_9 <- data_9 %>%
 ```
 
 ### concave.points_mean
+
+The concave.points_mean variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_10 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select concave.points_mean
 data_10 <- data %>% 
@@ -212,6 +242,8 @@ data_10 <- data_10 %>%
 ```
 
 ### symmetry_mean
+
+The symmetry_mean variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_11 was created for the cluster results and a new_ID variable was made as well. The optimal k appears to be at 4 but needed to be adjusted in order maintain the minimum number of observations for each catorgory for the Chi-square test.
 ```{r}
 # Select symmetry_mean
 data_11 <- data %>% 
@@ -234,6 +266,8 @@ data_11 <- data_11 %>%
 ```
 
 ### fractal_dimension_mean
+
+The fractal_dimension_mean variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=4 with 10 random starts. A new variable in data_12 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select fractal_dimension_mean
 data_12 <- data %>% 
@@ -258,6 +292,8 @@ data_12 <- data_12 %>%
 ## Variable clustering: se
 
 ### radius_se
+
+The radius_se variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_13 was created for the cluster results and a new_ID variable was made as well. The optimal k appears to be at 4 but needed to be adjusted in order maintain the minimum number of observations for each catorgory for the Chi-square test.
 ```{r}
 # Select radius_se
 data_13 <- data %>% 
@@ -280,6 +316,8 @@ data_13 <- data_13 %>%
 ```
 
 ### texture_se
+
+The texture_se variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=4 with 10 random starts. A new variable in data_14 was created for the cluster results and a new_ID variable was made as well. 
 ```{r}
 # Select texture_se
 data_14 <- data %>% 
@@ -302,6 +340,8 @@ data_14 <- data_14 %>%
 ```
 
 ### perimeter_se
+
+The perimeter_se variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_15 was created for the cluster results and a new_ID variable was made as well. The optimal k appears to be at 4 but needed to be adjusted in order maintain the minimum number of observations for each catorgory for the Chi-square test.
 ```{r}
 # Select perimeter_se
 data_15 <- data %>% 
@@ -324,6 +364,8 @@ data_15 <- data_15 %>%
 ```
 
 ### area_se
+
+The area_se variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=2 with 10 random starts. A new variable in data_16 was created for the cluster results and a new_ID variable was made as well. The optimal k appears to be at 3 but needed to be adjusted in order maintain the minimum number of observations for each catorgory for the Chi-square test.
 ```{r}
 # Select area_se
 data_16 <- data %>% 
@@ -346,6 +388,8 @@ data_16 <- data_16 %>%
 ```
 
 ### smoothness_se
+
+The smoothness_se variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_17 was created for the cluster results and a new_ID variable was made as well. 
 ```{r}
 # Select smoothness_se
 data_17 <- data %>% 
@@ -368,6 +412,8 @@ data_17 <- data_17 %>%
 ```
 
 ### compactness_se
+
+The compactnes_se variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_18 was created for the cluster results and a new_ID variable was made as well. 
 ```{r}
 # Select compactness_se
 data_18 <- data %>% 
@@ -390,6 +436,8 @@ data_18 <- data_18 %>%
 ```
 
 ### concavity_se
+
+The concavity_se variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=2 with 10 random starts. A new variable in data_19 was created for the cluster results and a new_ID variable was made as well. The optimal k appears to be at 4 but needed to be adjusted in order maintain the minimum number of observations for each catorgory for the Chi-square test.
 ```{r}
 # Select concavity_se
 data_19 <- data %>% 
@@ -412,6 +460,8 @@ data_19 <- data_19 %>%
 ```
 
 ### concave.points_se
+
+The concave.points_se variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=4 with 10 random starts. A new variable in data_20 was created for the cluster results and a new_ID variable was made as well. 
 ```{r}
 # Select concave.points_se
 data_20 <- data %>% 
@@ -425,7 +475,7 @@ fviz_nbclust(data_20, kmeans, method = "wss") +
   labs(subtitle = "Elbow method: concave.points_se")
 
 # Kmeans wss method
-k_wss <- kmeans(data_20, centers = 3, nstart = 10) 
+k_wss <- kmeans(data_20, centers = 4, nstart = 10) 
 
 # Make new colums for the new variables generated from kmeans
 data_20 <- data_20 %>% 
@@ -434,6 +484,8 @@ data_20 <- data_20 %>%
 ```
 
 ### symmetry_se
+
+The symmetry_se variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=4 with 10 random starts. A new variable in data_21 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select symetry_se
 data_21 <- data %>% 
@@ -447,7 +499,7 @@ fviz_nbclust(data_21, kmeans, method = "wss") +
   labs(subtitle = "Elbow method: symmetry_se")
 
 # Kmeans wss method
-k_wss <- kmeans(data_21, centers = 3, nstart = 10) 
+k_wss <- kmeans(data_21, centers = 4, nstart = 10) 
 
 # Make new colums for the new variables generated from kmeans
 data_21 <- data_21 %>% 
@@ -456,6 +508,8 @@ data_21 <- data_21 %>%
 ```
 
 ### fractal_dimension_se
+
+The fractal_dimension_se variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_22 was created for the cluster results and a new_ID variable was made as well. The optimal k appears to be at 4 but needed to be adjusted in order maintain the minimum number of observations for each catorgory for the Chi-square test.
 ```{r}
 # Select fractal_dimension_mean
 data_22 <- data %>% 
@@ -480,6 +534,8 @@ data_22 <- data_22 %>%
 ## Variable clustering: worst
 
 ### radius_worst
+
+The radius_worst variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_23 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select radius_worst
 data_23 <- data %>% 
@@ -502,6 +558,8 @@ data_23 <- data_23 %>%
 ```
 
 ### texture_worst
+
+The texture_worst variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=4 with 10 random starts. A new variable in data_24 was created for the cluster results and a new_ID variable was made as well. 
 ```{r}
 # Select texture_worst
 data_24 <- data %>% 
@@ -515,7 +573,8 @@ fviz_nbclust(data_24, kmeans, method = "wss") +
   labs(subtitle = "Elbow method: texture_worst")
 
 # Kmeans wss method
-k_wss <- kmeans(data_24, centers = 3, nstart = 10) 
+
+ k_wss<- kmeans(data_24, centers = 3, nstart = 10) 
 
 # Make new colums for the new variables generated from kmeans
 data_24 <- data_24 %>% 
@@ -524,6 +583,8 @@ data_24 <- data_24 %>%
 ```
 
 ### perimeter_worst
+
+The perimeter_worst variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=4 with 10 random starts. A new variable in data_25 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select perimeter_worst
 data_25 <- data %>% 
@@ -547,6 +608,8 @@ data_25 <- data_25 %>%
 
 
 ### area_worst
+
+The area_worst variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=4 with 10 random starts. A new variable in data_26 was created for the cluster results and a new_ID variable was made as well. 
 ```{r}
 # Select area_worst
 data_26 <- data %>% 
@@ -570,6 +633,8 @@ data_26 <- data_26 %>%
 
 
 ### smoothness_worst
+
+The smoothness_worst variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=4 with 10 random starts. A new variable in data_27 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select smoothness_worst
 data_27 <- data %>% 
@@ -593,6 +658,8 @@ data_27 <- data_27 %>%
 
 
 ### compactness_worst
+
+The compactness_worst variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=4 with 10 random starts. A new variable in data_28 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select compactness_worst
 data_28 <- data %>% 
@@ -606,7 +673,7 @@ fviz_nbclust(data_28, kmeans, method = "wss") +
   labs(subtitle = "Elbow method: compactness_worst")
 
 # Kmeans wss method
-k_wss <- kmeans(data_28, centers = 3, nstart = 10) 
+k_wss <- kmeans(data_28, centers = 4, nstart = 10) 
 
 # Make new colums for the new variables generated from kmeans
 data_28 <- data_28 %>% 
@@ -616,6 +683,8 @@ data_28 <- data_28 %>%
 
 
 ### concavity_worst
+
+The concavity_worst variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=3 with 10 random starts. A new variable in data_29 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select radius_worst
 data_29 <- data %>% 
@@ -638,6 +707,8 @@ data_29 <- data_29 %>%
 ```
 
 ### concave.points_worst
+
+The concave.points_worst variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=4 with 10 random starts. A new variable in data_30 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select concave.points_worst
 data_30 <- data %>% 
@@ -651,7 +722,7 @@ fviz_nbclust(data_30, kmeans, method = "wss") +
   labs(subtitle = "Elbow method: concave.points_worst")
 
 # Kmeans wss method
-k_wss <- kmeans(data_30, centers = 3, nstart = 10) 
+k_wss <- kmeans(data_30, centers = 4, nstart = 10) 
 
 # Make new colums for the new variables generated from kmeans
 data_30 <- data_30 %>% 
@@ -659,7 +730,9 @@ data_30 <- data_30 %>%
           new_ID = seq(1:569))
 ```
 
-#### symmetry_worst
+### symmetry_worst
+
+The symmetry_worst variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=4 with 10 random starts. A new variable in data_31 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select radius_worst
 data_31 <- data %>% 
@@ -681,7 +754,9 @@ data_31 <- data_31 %>%
           new_ID = seq(1:569))
 ```
 
-#### fractal_dimension_worst
+### fractal_dimension_worst
+
+The fractal_dimension_worst variable was selected and the seed set for reproduciblity. A graph was created for the different clusters using the within sum of squares for k=1 to k=10. The optimal k was found using the elbow method. The k-means algorithm was run using the optimal k=4 with 10 random starts. A new variable in data_32 was created for the cluster results and a new_ID variable was made as well.
 ```{r}
 # Select radius_worst
 data_32 <- data %>% 
@@ -695,7 +770,7 @@ fviz_nbclust(data_32, kmeans, method = "wss") +
   labs(subtitle = "Elbow method: fractal_dimension_worst")
 
 # Kmeans wss method
-k_wss <- kmeans(data_32, centers = 3, nstart = 10) 
+k_wss <- kmeans(data_32, centers = 4, nstart = 10) 
 
 # Make new colums for the new variables generated from kmeans
 data_32 <- data_32 %>% 
@@ -703,7 +778,9 @@ data_32 <- data_32 %>%
           new_ID = seq(1:569))
 ```
 
-### Merge Datasets
+## Merge Datasets
+
+Id, diagnosis and new_ID were selected and a merge function was made that allowed multiple data frames to be merged at the same time. The the different data frames were merged by the new function and the columns in data_new were rearranged to have all the origninal variables together and all the variables ending in wss together.
 ```{r}
 #Select the first 2 row the data file
 data_new <- data %>% 
@@ -731,7 +808,9 @@ data_new <- data_new[c(1,2,3,4,6,8,10,12,14,16,18,20,
                        49,51,53,55,57,59,61,63)]
 ```
 
-### Scale Continous Variables
+## Scale Continous Variables
+
+The continues variables were selected and scaled to have a mean of zero and a standard deviation of one. These variables were then removed leaving only the new scaled variables and the new_ID variable was created. data_new_scale was then merged with data_new by new_ID.
 ```{r}
 # Rescale Variables to have a mean of 0 and standard deviation of 1
 data_new_scale <-data_new %>% 
@@ -742,21 +821,43 @@ data_new_scale <-data_new %>%
 
 # Merge data_new_scale with data_new
 data_new <- merge(data_new, data_new_scale, by = "new_ID")
-
 ```
 
-### Transform Variables to Make Them Normal
-```{r}
+## Transform Variables to Make Them Normal
+
+The continuous variables were selected and converted to long form. A histogram was made of the variables to determine if they were were normally distributed. Some of the variables appear to not be normally distributed. The continuous variables were reselected, the variables to transformed were created and the original variables were removed. A Box Cox transformation was applied to these variables. The data was converted to long form again and a histogram of the variables was made. A few of the variables have outliers. Upon farther investigation, these outliers do not appear to be typos, but legitimate data and will be kept as part of the analysis. This may affect the results of the lda and qda models. new_ID variable was created and data_new_trans was merged with data_new by the new_ID variable. 
+```{r, warning=FALSE, message=FALSE}
+# Select the continous variables
+data_new_trans <-data_new %>% 
+  select(c(4:33))
+
+# Convert to long format
+melt_df<-melt(data_new_trans)
+
+# Histogram of all variables
+ggplot(melt_df, aes(x=value)) + 
+  geom_histogram()+
+  facet_wrap(~variable, scale="free")+
+  labs(title = "Histogram of Continuous Variables")
+
 # Select continous variables to be transformed
 data_new_trans <-data_new %>% 
   select(c(4:33)) %>% 
   mutate_all(funs(trans = (.))) %>% 
   select(-c(1:30))
 
-# Apply Box Cox Transformation
+# Apply Box Cox transformation
 process_vars <- preProcess(data_new_trans, method = c("BoxCox"))
-
 data_new_trans <- predict(process_vars, data_new_trans)
+
+# Convert to long format
+melt_df<-melt(data_new_trans)
+
+# Histogram of transformed variables
+ggplot(melt_df, aes(x=value)) + 
+  geom_histogram()+
+  facet_wrap(~variable, scale="free")+
+  labs(title = "Histogram of Transformed Variables")
 
 # Create new variable to merge on
 data_new_trans <- data_new_trans %>% 
@@ -769,6 +870,8 @@ data_new <- merge(data_new, data_new_trans, by = "new_ID")
 ## Variable Selection and Data Processing
 
 ### Split Dataset With All Variables
+
+A seed was set for reproducibility and the data was split 70:30 into training and test datasets.
 ```{r}
 # Set seed for reproducibility
 set.seed(123)
@@ -781,18 +884,12 @@ index <- createDataPartition(data_new$diagnosis,
 train_data <- data_new[index, ]
 test_data <- data_new[-index, ]
 
-# Upsample the data
-train_data_up <- upSample(x = train_data[, -ncol(train_data)],
-                     y = train_data$diagnosis)
-
-# Downsample the data
-train_data_down <- downSample(x = train_data[, -ncol(train_data)],
-                     y = train_data$diagnosis)
-
 ```
 
 
 ### Chi-square Test
+
+The binned variables along with diagnosis were selected. A special function was made to run the Chi-square test on the all the variables at once. The statistically significant variable were selected. A seed was set for reproducibility and the dataset including only the variables selected by the chi-square test was split 70:30 into training and test datasets.
 ```{r}
 # Select the variable to be use in the Chi-square test
 data_chisquare <- data_new %>%
@@ -826,17 +923,11 @@ index <- createDataPartition(data_chisquare$diagnosis,
 
 train_chisquare <- data_chisquare[index, ]
 test_chisquare <- data_chisquare[-index, ]
-
-# Upsample the data
-train_chisquare_up <- upSample(x = train_chisquare[, -ncol(train_chisquare)],
-                     y = train_chisquare$diagnosis)
-
-# Downsample the data
-train_chisquare_down <- downSample(x = train_chisquare[, -ncol(train_chisquare)],
-                     y = train_chisquare$diagnosis)
 ```
 
 ### Classification Tree
+
+A seed was set for reproducibility, and a classification tree was run using the default settings of the rpart() function. The resulting tree was viewed and the variables that were selected by the tree were placed into a new dataset. A seed was set again for reproducibility and this dataset was partition 70:30 into training and test datasets.
 ```{r}
 # Set seed for reproducibility
 set.seed(123)
@@ -865,19 +956,13 @@ index <- createDataPartition(data_classtree$diagnosis,
 
 train_classtree <- data_classtree[index, ]
 test_classtree <- data_classtree[-index, ]
-
-# Upsample the data
-train_classtree_up <- upSample(x = train_classtree[, -ncol(train_classtree)],
-                     y = train_classtree$diagnosis)
-
-# Downsample the data
-train_classtree_down <- downSample(x = train_classtree[, -ncol(train_classtree)],
-                     y = train_classtree$diagnosis)
 ```
 
 ## K-NN
 
 ### All Variables 
+
+K-NN was run on all the variables. The scaled variables were selected and a seed set for reproducibility. The model was fit to the training dataset with 10-fold cross-validation. The resulting model was used to classify the type of cancer on the test dataset and a confusion matrix was generated.
 ```{r}
 # Select scaled variables
 train_data_knn <- train_data %>% 
@@ -896,10 +981,12 @@ knn_fit = train(diagnosis~.,
 knnPredict = predict(knn_fit, newdata = test_data)
 
 # Confusion matrix
-confusionMatrix(knnPredict, test_data$diagnosis)
+confusionMatrix(knnPredict, test_data$diagnosis, positive = "M")
 ```
 
-### Chisquare
+### Chi-square Variables
+
+K-NN was run on the variables selected by the Chi-square test. The scaled variables were selected and a seed set for reproducibility. The model was fit to the training dataset with 10-fold cross-validation. The resulting model was used to classify the type of cancer on the test dataset, and a confusion matrix was generated.
 ```{r}
 # Select scaled variables
 train_data_knn <- train_chisquare %>% 
@@ -918,10 +1005,12 @@ knn_fit = train(diagnosis~.,
 knnPredict = predict(knn_fit, newdata = test_chisquare)
 
 # Confusion matrix
-confusionMatrix(knnPredict, test_chisquare$diagnosis)
+confusionMatrix(knnPredict, test_chisquare$diagnosis, positive = "M")
 ```
 
-### Classification Tree
+### Classification Tree Variables
+
+K-NN was run on the variables selected by the classification tree. The scaled variables were selected and a seed set for reproducibility. The model was fit to the training dataset with 10-fold cross-validation. The resulting model was used to classify the type of cancer on the test dataset, and a confusion matrix was generated.
 ```{r}
 # Select scaled variables
 train_data_knn <- train_classtree %>% 
@@ -940,258 +1029,132 @@ knn_fit = train(diagnosis~.,
 knnPredict = predict(knn_fit, newdata = test_classtree)
 
 # Confusion matrix
-confusionMatrix(knnPredict, test_classtree$diagnosis)
+confusionMatrix(knnPredict, test_classtree$diagnosis, positive = "M")
 ```
-
-## Naive Bayes
-
-### All Variables 
-```{r}
-# Select scaled variables
-train_data_nb <- train_data %>% 
-  select(diagnosis, ends_with("wss"))
-  
-# Set seed for reproducibility
-set.seed(123)
-
-# Fit the model
-nb_fit = train(diagnosis~., data = train_data_nb,
-                method = "naive_bayes",
-                trControl = trainControl(method = "cv", number = 10))
-
-# Make predictions using the test dataset
-nbPredict = predict(nb_fit, newdata = test_data)
-
-# Confusion matrix
-confusionMatrix(nbPredict, test_data$diagnosis)
-```
-
-### Chisquare
-```{r}
-# Select scaled variables
-train_data_nb <- train_chisquare %>% 
-  select(diagnosis, ends_with("wss"))
-
-# Set the seed for reproducibility
-set.seed(123)
-
-# Fit the model
-nb_fit = train(diagnosis~.,
-                      data = train_data_nb,
-                      method = "naive_bayes",
-                     trControl = trainControl(method = "cv", number = 10))
-
-# Make predictions using the test dataset
-nbPredict= predict(nb_fit, newdata = test_chisquare)
-
-# COnfusion matrix
-confusionMatrix(nbPredict, test_chisquare$diagnosis)
-```
-
-### Classification Tree
-```{r}
-# Select scaled variables
-train_data_nb <- train_classtree %>% 
-  select(diagnosis, ends_with("wss"))
-
-# Set seed for reproducibility
-set.seed(123)
-
-# Fit the model
-nb_fit = train(diagnosis~.,
-                      data = train_data_nb,
-                      method = "naive_bayes",
-                     trControl = trainControl(method = "cv", number = 10))
-
-# Make predictions using the test dataset
-nbPredict = predict(nb_fit, newdata = test_classtree)
-
-# Confusion matrix
-confusionMatrix(nbPredict, test_classtree$diagnosis)
-```
-
-```{r}
-#Load reshape2, needed for melt to convert from wide to long
-library(reshape2)
-
-#Convert to long format
-melt_df<-melt(data_new_trans[-32])
-
-# Box plot of all variables
-ggplot(melt_df, aes(x=value)) + 
-  geom_histogram()+
-  facet_wrap(~variable, scale="free")
-```
-
-Most variabels are *roughly* normal, except for the new_ID variable, which needs to be taken out anyway.
-Our target variable, diagnosis, needs to be added.
-
-```{r}
-data_new_trans_all = data_new_trans %>% 
-  select(-c(new_ID)) %>% 
-  mutate(diagnosis = data_new$diagnosis)
-```
-
 ## LDA
 
-### All Variables
+### All Variables 
 
-Fitting the model with all variables.
+Linear discriminant analysis was run on all the variables. The transformed variables were selected, and the model was fit to the training dataset. A stacked histogram was made in order to understand the model's ability to separate malignant and benign cancer. The resulting model was used to classify the type of cancer on the test dataset, and a confusion matrix was generated.
 ```{r}
-library(MASS)
-set.seed(123)
+# Select the transformed variables
+train_new_trans_all <- train_data %>% 
+  select(diagnosis, ends_with("trans"))
 
-index = createDataPartition(data_new_trans_all$diagnosis, p = 0.7, list = FALSE)
-train_new_trans_all = data_new_trans_all[index, ]
-test_new_trans_all = data_new_trans_all[-index, ]
-
+# Fit the linear discriminant analysis model
 lda_all = lda(diagnosis~., data = train_new_trans_all)
-lda_all
-```
 
-Visualizing the model.
-```{r}
+# Make a stacked histogram
 lda_predict_all = predict(lda_all)
 ldahist(data = lda_predict_all$x[,1], g=train_new_trans_all$diagnosis)
-```
-There is some overlap between the malignant and benign classes, but not too much.
 
-Prediction accuracy
-```{r}
-library(caret)
 # Make prediction using the fitted model on test data
-pred_test = predict(lda_all, test_new_trans_all)
+pred_test = predict(lda_all, test_data)
 
-# Extract predicted class
-pred_class = as.factor(pred_test$class)
-
-#Confustion Matirx
-confusionMatrix(pred_class, as.factor(test_new_trans_all$diagnosis))
+#Confustion matirx
+confusionMatrix(as.factor(pred_test$class), as.factor(test_data$diagnosis), positive = "M")
 ```
 
-### Chi-Squared Variables
+### Chi-square Variables
 
-Lets perform the same actions with the 25 variables that were determined signifiant by the chi-square test.
+Linear discrimant analysis was run on the variables selected by the Chi-square test. The transformed variables were selected, and the model was fit to the training dataset. A stacked histogram was made in order to understand the model's ability to separate malignant and benign cancer. The resulting model was used to classify the type of cancer on the test dataset, and a confusion matrix was generated.
 ```{r}
-data_new_trans_chisq = data_chisquare %>% 
-  select(ends_with("trans"), diagnosis)
-```
+# Select the transformed variables
+train_data_lda <- train_chisquare %>% 
+  select(diagnosis, ends_with("trans"))
 
-```{r}
-set.seed(123)
+# Fit the linear discriminant analysis model
+lda_chi = lda(diagnosis~., data = train_data_lda)
 
-index = createDataPartition(data_new_trans_chisq$diagnosis, p = 0.7, list = FALSE)
-train_new_trans_chisq = data_new_trans_chisq[index, ]
-test_new_trans_chisq = data_new_trans_chisq[-index, ]
+# Make a stacked histogram
+lda_predict_chi = predict(lda_chi)
+ldahist(data = lda_predict_all$x[,1], g=train_data_lda$diagnosis)
 
-lda_chisq <- lda(diagnosis~., data = train_new_trans_chisq)
-lda_chisq
-```
-
-```{r}
-lda_predict_chisq = predict(lda_chisq)
-ldahist(data = lda_predict_chisq$x[,1], g=train_new_trans_chisq$diagnosis)
-```
-This graph doesn't look to be too much different from the one including all the variables. Lets test its accuracy to find out if it is an improvement or not.
-
-```{r}
 # Make prediction using the fitted model on test data
-pred_test = predict(lda_chisq, test_new_trans_chisq)
+pred_test = predict(lda_chi, test_chisquare)
 
-# Extract predicted class
-pred_class = as.factor(pred_test$class)
-
-#Confustion Matirx
-confusionMatrix(pred_class, as.factor(test_new_trans_chisq$diagnosis))
+#Confustion matirx
+confusionMatrix(as.factor(pred_test$class), as.factor(test_chisquare$diagnosis), positive = "M")
 ```
-The accuracy of the model actually seems to have reduced. Lets fit the model one more time on the variables the classification tree determined to be important.
 
 ### Classification Tree Variables
+
+Linear discriminant analysis was run on the variables selected by the classification tree. The transformed variables were selected, and the model was fit to the training dataset. A stacked histogram was made in order to understand the model's ability to separate malignant and benign cancer. The resulting model was used to classify the type of cancer on the test dataset, and a confusion matrix was generated.
 ```{r}
-data_new_trans_tree = data_classtree %>% 
-  select(ends_with("trans"), diagnosis)
-```
+# Select the transformed variables
+train_data_lda <- train_classtree %>% 
+  select(diagnosis, ends_with("trans"))
 
-Only three predictors are used by the classification tree. Lets fit the model and assess its accuracy.
+# Fit the linear discriminant analysis model
+lda_chi = lda(diagnosis~., data = train_data_lda)
 
-```{r}
-set.seed(123)
+# Make a stacked histogram
+lda_predict_chi = predict(lda_chi)
+ldahist(data = lda_predict_all$x[,1], g=train_data_lda$diagnosis)
 
-index = createDataPartition(data_new_trans_tree$diagnosis, p = 0.7, list = FALSE)
-train_new_trans_tree = data_new_trans_tree[index, ]
-test_new_trans_tree = data_new_trans_tree[-index, ]
-
-lda_tree = lda(diagnosis~., data = train_new_trans_tree)
-lda_tree
-```
-
-```{r}
-lda_predict_tree = predict(lda_tree)
-ldahist(data = lda_predict_tree$x[,1], g=train_new_trans_tree$diagnosis)
-```
-This model looks to be worse than the other two.
-
-```{r}
 # Make prediction using the fitted model on test data
-pred_test = predict(lda_tree, test_new_trans_tree)
+pred_test = predict(lda_chi, test_classtree)
 
-# Extract predicted class
-pred_class = as.factor(pred_test$class)
-
-#Confustion Matirx
-confusionMatrix(pred_class, as.factor(test_new_trans_tree$diagnosis))
+#Confustion matirx
+confusionMatrix(as.factor(pred_test$class), 
+                as.factor(test_classtree$diagnosis), positive = "M")
 ```
-This model has the same accuracy as the chi-square model, but makes different mistakes.
-
 
 ## QDA
 
-### All Variables.
+### All Variables 
+
+Quadratic discriminant analysis was run on all the variables. The transformed variables were selected, and the model was fit to the training dataset. The resulting model was used to classify the type of cancer on the test dataset, and a confusion matrix was generated.
+
 ```{r}
+# Select the transformed variables
+train_new_trans_all <- train_data %>% 
+  select(diagnosis, ends_with("trans"))
+
+# Fit the linear discriminant analysis model
 qda_all = qda(diagnosis~., data = train_new_trans_all)
-qda_all
 
 # Make prediction using the fitted model on test data
-pred_test = predict(qda_all, test_new_trans_all)
+pred_test = predict(qda_all, test_data)
 
-# Extract predicted class
-pred_class = as.factor(pred_test$class)
-
-#Confustion Matirx
-confusionMatrix(pred_class, as.factor(test_new_trans_all$diagnosis))
+#Confustion matirx
+confusionMatrix(as.factor(pred_test$class), as.factor(test_data$diagnosis), positive = "M")
 ```
-This model has 93% accuracy, whereas the LDA model for all variables had a 97% accuracy.
 
-### Chi-Squared Variables
+### Chi-square Variables
 
+Quadratic discriminant analysis was run on the variables selected by the Chi-square test. The transformed variables from the Chi-square test were selected, and the model was fit to the training dataset. The resulting model was used to classify the type of cancer on the test dataset, and a confusion matrix was generated.
 ```{r}
-qda_chisq = qda(diagnosis~., data = train_new_trans_chisq)
-qda_chisq
+# Select the transformed variables
+train_data_qda <- train_chisquare %>% 
+  select(diagnosis, ends_with("trans"))
+
+# Fit the linear discriminant analysis model
+qda_chi = qda(diagnosis~., data = train_data_qda)
 
 # Make prediction using the fitted model on test data
-pred_test = predict(qda_chisq, test_new_trans_chisq)
+pred_test = predict(qda_chi, test_chisquare)
 
-# Extract predicted class
-pred_class = as.factor(pred_test$class)
-
-#Confustion Matirx
-confusionMatrix(pred_class, as.factor(test_new_trans_chisq$diagnosis))
+#Confustion matirx
+confusionMatrix(as.factor(pred_test$class), as.factor(test_chisquare$diagnosis), positive = "M")
 ```
-The accuracy of this model appears to be an improvement over the QDA model with all the variables. Its accuracy is about the same as the LDA models using the chi-square and classification tree variables.
 
 ### Classification Tree Variables
 
+Quadratic discriminant analysis was run on the variables selected by the classification tree. The transformed variables were selected, and the model was fit to the training dataset. The resulting model was used to classify the type of cancer on the test dataset, and a confusion matrix was generated.
 ```{r}
-qda_tree = qda(diagnosis~., data = train_new_trans_tree)
-qda_tree
+# Select the transformed variables
+train_data_qda <- train_classtree %>% 
+  select(diagnosis, ends_with("trans"))
+
+# Fit the linear discriminant analysis model
+qda_chi = qda(diagnosis~., data = train_data_qda)
+
 
 # Make prediction using the fitted model on test data
-pred_test = predict(qda_tree, test_new_trans_tree)
+pred_test = predict(qda_chi, test_classtree)
 
-# Extract predicted class
-pred_class = as.factor(pred_test$class)
-
-#Confustion Matirx
-confusionMatrix(pred_class, as.factor(test_new_trans_tree$diagnosis))
+#Confustion matirx
+confusionMatrix(as.factor(pred_test$class), 
+                as.factor(test_classtree$diagnosis), positive = "M")
 ```
-Again, this appears to have about the same accuracy as the Chi-Square variables.
